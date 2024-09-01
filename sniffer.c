@@ -23,7 +23,7 @@ int main()
     __u32 num = 0;
 
     listener = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-    //listener = socket(AF_INET, SOCK_STREAM, 0);
+    
     if(listener < 0)
     {
         perror("socket");
@@ -37,13 +37,7 @@ int main()
     printf("IP адрес - %d\n",addr.sin_family);
     printf("IP адрес - %d\n",addr.sin_port);
     printf("IP адрес - %d\n",addr.sin_addr.s_addr);
-/*
-    if(bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-    {
-        perror("bindn");
-        exit(2);
-    }
-*/
+
     listen(listener, 1);
     
     
@@ -51,8 +45,7 @@ int main()
         while(1)
         {
             bytes_read=recvfrom(listener,buf,sizeof(buf),0,NULL,NULL);
-            //recvline[bytes_read]=0;
-            //printf("Received: %s\n",bytes_read);
+            
             
             if(bytes_read <= 0) break;
 
@@ -76,10 +69,7 @@ int main()
     printf("Длина заголовка - %d, ", (ip.ihl * 4));
     printf("длина пакета - %d\n", ntohs(ip.tot_len));
 
-/*
- * Если транспортный протокол - TCP, отобразим IP адреса и порты
- * получателя и отправителя
- */
+
     if(ip.protocol == IPPROTO_TCP) {
         printf("%d (%d)\t->\t",inet_ntoa(ip.saddr), ntohs(tcp.source));
         printf("%d (%d)\n",inet_ntoa(ip.daddr), ntohs(tcp.dest));
