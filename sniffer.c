@@ -34,8 +34,8 @@ int main()
     addr.sin_port = htons(ETH_P_ALL);
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    printf("IP адрес - %d\n",addr.sin_family);
-    printf("IP адрес - %d\n",addr.sin_port);
+    printf("Номер порта - %d\n",addr.sin_family);
+    printf("Порт - %d\n",addr.sin_port);
     printf("IP адрес - %d\n",addr.sin_addr.s_addr);
 
     listen(listener, 1);
